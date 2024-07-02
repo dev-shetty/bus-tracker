@@ -1,8 +1,7 @@
-import { supabase } from "@/utils/supabase"
-import Button from "@components/ui/button"
+import { supabase } from "@/src/utils/supabase"
 import * as Location from "expo-location"
 import React, { useEffect, useState } from "react"
-import { Platform, StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import MapView from "react-native-maps"
 
 export default function LocationCoords() {
@@ -46,7 +45,7 @@ export default function LocationCoords() {
               onConflict: "bus_id",
             })
           }
-          console.warn(location)
+          // console.warn(loc)
         } catch (error) {
           console.log(error)
         }
@@ -84,12 +83,6 @@ export default function LocationCoords() {
             showsUserLocation
             showsMyLocationButton={false}
           />
-          {/* <Button
-            text="Go to Map"
-            onPress={() => {
-              router.push("/map")
-            }}
-          /> */}
         </>
       ) : (
         <Text>Waiting...</Text>
