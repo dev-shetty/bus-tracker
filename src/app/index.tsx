@@ -9,7 +9,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       {/* <Stack.Screen /> */}
-      <LocationCoords />
+      {/* <LocationCoords /> */}
       <StatusBar style="auto" />
     </View>
   )

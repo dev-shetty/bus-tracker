@@ -72,17 +72,6 @@ export default function LocationCoords() {
         <>
           <Text style={styles.paragraph}>{location?.coords.latitude}</Text>
           <Text style={styles.paragraph}>{location?.coords.longitude}</Text>
-          <MapView
-            style={styles.map}
-            region={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
-            }}
-            showsUserLocation
-            showsMyLocationButton={false}
-          />
         </>
       ) : (
         <Text>Waiting...</Text>

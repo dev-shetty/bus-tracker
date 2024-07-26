@@ -11,24 +11,45 @@ export default function MapScreen() {
   const [location, setLocation] = useState<Bus | null>(null)
 
   const BUS_ID = "BUS-001"
-  const LOCATION_TIMER = 5000
 
   useEffect(() => {
-    let locationInterval: NodeJS.Timeout
-    locationInterval = setInterval(async () => {
-      try {
-        const loc = await supabase.from("bus").select("*").eq("bus_id", BUS_ID)
-        console.log(loc?.data![0])
-        if (loc.data) {
-          setLocation(loc.data[0])
-        }
-      } catch (error) {
-        console.log(error)
+    // Fetch the inital data
+    ;(async () => {
+      const loc = await supabase.from("bus").select("*").eq("bus_id", BUS_ID)
+      console.log(loc?.data![0])
+      if (loc.data) {
+        setLocation(loc.data[0])
       }
-    }, LOCATION_TIMER)
+    })()
+
+    // Subscribe to the changes
+    const channels = supabase
+      .channel("bus-location-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "bus",
+          filter: `bus_id=eq.${BUS_ID}`,
+        },
+        (payload) => {
+          console.log("Change received!", payload)
+          setLocation({
+            id: payload.new.id,
+            bus_id: payload.new.bus_id,
+            latitude: payload.new.latitude,
+            longitude: payload.new.longitude,
+            updated_at: payload.new.updated_at,
+            created_at: payload.new.created_at,
+          })
+        }
+      )
+      .subscribe()
+    console.log(channels)
 
     return () => {
-      clearInterval(locationInterval)
+      channels.unsubscribe()
     }
   }, [])
   return (
