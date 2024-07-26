@@ -1,3 +1,4 @@
+import BusDetails from "@/src/components/bus-details"
 import LocationCoords from "@components/location-coords"
 import { Colors } from "@constants/Colors"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
@@ -9,7 +10,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       {/* <Stack.Screen /> */}
-      {/* <LocationCoords /> */}
+      <BusDetails />
       <StatusBar style="auto" />
     </View>
   )

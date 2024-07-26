@@ -2,14 +2,12 @@ import { supabase } from "@/src/utils/supabase"
 import * as Location from "expo-location"
 import React, { useEffect, useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
-import MapView from "react-native-maps"
 
-export default function LocationCoords() {
+export default function LocationCoords({ busId }: { busId: string }) {
   const [location, setLocation] = useState<Location.LocationObject | null>(null)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
-  const BUS_ID = "BUS-001"
-  const LOCATION_TIMER = 5000
+  const BUS_ID = busId
 
   useEffect(() => {
     let locationInterval: NodeJS.Timeout
@@ -21,6 +19,9 @@ export default function LocationCoords() {
       } else {
         setErrorMsg("")
       }
+
+      // Send the location every 5 seconds
+      const LOCATION_TIMER = 5000
 
       locationInterval = setInterval(async () => {
         try {
@@ -65,7 +66,7 @@ export default function LocationCoords() {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       {errorMsg ? (
         <Text>{errorMsg}</Text>
       ) : location ? (
@@ -74,7 +75,7 @@ export default function LocationCoords() {
           <Text style={styles.paragraph}>{location?.coords.longitude}</Text>
         </>
       ) : (
-        <Text>Waiting...</Text>
+        <Text>Fetching Location...</Text>
       )}
     </View>
   )

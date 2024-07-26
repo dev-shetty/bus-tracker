@@ -6,9 +6,14 @@ type ButtonProps = {
 } & React.ComponentPropsWithoutRef<typeof Pressable>
 
 const Button = forwardRef<View | null, ButtonProps>(
-  ({ text, ...pressableProps }, ref) => {
+  ({ text, style, ...pressableProps }, ref) => {
     return (
-      <Pressable ref={ref} {...pressableProps} style={styles.container}>
+      <Pressable
+        ref={ref}
+        // @ts-ignore It works, Stylesheet is an object, so it can be spread
+        style={{ ...styles.container, ...style }}
+        {...pressableProps}
+      >
         <Text style={styles.text}>{text}</Text>
       </Pressable>
     )

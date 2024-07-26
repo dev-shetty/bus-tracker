@@ -41,12 +41,32 @@ export default function RootLayout() {
           name="index"
           options={{
             headerTitle: "Bus tracker",
+            // headerRight: () => (
+            //   <Link href="/map" asChild>
+            //     <Pressable>
+            //       {({ pressed }) => (
+            //         <FontAwesome
+            //           name="map"
+            //           size={25}
+            //           color={Colors.dark.text}
+            //           style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+            //         />
+            //       )}
+            //     </Pressable>
+            //   </Link>
+            // ),
+          }}
+        />
+        <Stack.Screen
+          name="map"
+          options={{
+            headerTitle: "Map",
             headerRight: () => (
-              <Link href="/map" asChild>
+              <Link href="/" asChild>
                 <Pressable>
                   {({ pressed }) => (
                     <FontAwesome
-                      name="map"
+                      name="home"
                       size={25}
                       color={Colors.dark.text}
                       style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
@@ -58,9 +78,9 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
-          name="map"
+          name="coords"
           options={{
-            headerTitle: "Map",
+            headerTitle: "Your co-ordinates",
             headerRight: () => (
               <Link href="/" asChild>
                 <Pressable>
